@@ -38,7 +38,7 @@ const PaymentDetails = ({
         </button>
       </div>
 
-      <p className="text-red-600 text-sm">{warning}</p>
+      <p className="text-red-400 text-sm">{warning}</p>
 
       {copied && <p className="text-green-500 text-sm">Copied!</p>}
     </div>

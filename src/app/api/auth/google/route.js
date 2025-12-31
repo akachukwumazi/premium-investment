@@ -154,7 +154,7 @@ export const POST = asyncHandler(async (req) => {
         fullName: name,
         referralCode: newReferralCode,
         referredBy: null,
-        accountBalance: 0,
+        accountDeposit: 0,
         referralCount: 0,
         referralRewards: [],
         emailVerified: true,
@@ -179,11 +179,11 @@ export const POST = asyncHandler(async (req) => {
           await client
             .patch(referrer._id)
             .setIfMissing({
-              accountBalance: 0,
+              accountDeposit: 0,
               referralCount: 0,
               referralRewards: [],
             })
-            .inc({ accountBalance: 10, referralCount: 1 })
+            .inc({ accountDeposit: 10, referralCount: 1 })
             .append("referralRewards", [
               {
                 _key: uuid(),

@@ -48,11 +48,11 @@ const CustomSelect = ({ options, selected, onChange, label }) => {
               <div
                 key={opt.name}
                 onClick={(e) => {
-                  e.stopPropagation(); // 🧠 prevents parent click
+                  e.stopPropagation();
                   handleSelect(opt);
                 }}
                 className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer ${
-                  selected.name === opt.name ? "bg-gray-50" : "bg-white"
+                  selected.name === opt.name ? "bg-gray-300" : "bg-white"
                 }`}
               >
                 {opt.icon}

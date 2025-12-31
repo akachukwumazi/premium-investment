@@ -40,13 +40,13 @@ export async function validateAndPrepareWithdrawal(req, user) {
   }
 
   const userData = await client.fetch(
-    `*[_type == "user" && _id == $userId][0]{ _id, fullName, email, accountBalance }`,
+    `*[_type == "user" && _id == $userId][0]{ _id, fullName, email, accountDeposit }`,
     { userId }
   );
 
   if (!userData) return { error: sendResponse(false, "User not found", 404) };
 
-  const currentBalance = userData.accountBalance || 0;
+  const currentBalance = userData.accountDeposit || 0;
   if (currentBalance < amount) {
     return {
       error: sendResponse(

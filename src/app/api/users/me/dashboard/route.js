@@ -14,7 +14,7 @@ export const GET = withAuth(
     if (!userId) return sendResponse(false, "Unauthorized: Please log in", 401);
 
     const userData = await client.fetch(
-      `*[_type == "user" && _id == $userId][0]{accountBalance, totalProfit}`,
+      `*[_type == "user" && _id == $userId][0]{accountDeposit, totalProfit}`,
       { userId }
     );
 
@@ -42,7 +42,7 @@ export const GET = withAuth(
 
     return sendResponse(true, "Dashboard statistics fetched successfully", 200, {
       data: {
-        balance: userData?.accountBalance || 0,
+        balance: userData?.accountDeposit || 0,
         totalProfitAmount: userData?.totalProfit || 0,
         totalWithdrawalAmount: totalWithdrawalAmount,
         totalInvestmentAmount: totalInvestmentAmount,

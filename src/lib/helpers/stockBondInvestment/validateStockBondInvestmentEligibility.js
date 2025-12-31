@@ -9,7 +9,7 @@ export async function validateStockBondInvestmentEligibility(
   const unitsHeld = plan.unitHeld;
   const totalCost = unitsHeld * plan.currentPrice;
 
-  if ((user.accountBalance || 0) < totalCost) {
+  if ((user.accountDeposit || 0) < totalCost) {
     return {
       success: false,
       message: "Insufficient balance. Please fund your wallet.",

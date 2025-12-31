@@ -29,7 +29,7 @@ export async function createRealEstateInvestmentRecord(
       updatedAt: now.toISOString(),
     });
 
-    await client.patch(userId).dec({ accountBalance: amount }).commit();
+    await client.patch(userId).dec({ accountDeposit: amount }).commit();
 
     return {
       success: true,

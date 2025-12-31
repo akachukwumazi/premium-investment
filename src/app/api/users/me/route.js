@@ -213,7 +213,7 @@ export const GET = withAuth(
       referralCount,
       phoneNumber,
       accountStatus,
-      accountBalance,
+      accountDeposit,
       accountProfit,
       emailVerified,
       authProvider,

@@ -16,6 +16,7 @@ const loanInvest = "/loan_investment_dashboard.jpg";
 
 const page = () => {
 const { apiRequest, loading } = useApi();
+const [reload, setReload] = useState(false);
 
   const pulse = 0;
   const [stat, setStats] = useState();
@@ -104,9 +105,9 @@ const { apiRequest, loading } = useApi();
           </div>
         </div>
         <div className="flex gap-10 w-full flex-col">
-          <LoanCalculator />
+          <LoanCalculator  setReload={setReload} />
 
-          <LoanServices />
+          <LoanServices reload={reload} />
         </div>
       </div>
     </motion.div>

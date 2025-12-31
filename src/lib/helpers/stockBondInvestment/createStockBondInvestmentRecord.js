@@ -25,7 +25,7 @@ export async function createStockBondInvestmentRecord(
       updatedAt: now.toISOString(),
     });
 
-    await client.patch(userId).dec({ accountBalance: totalCost }).commit();
+    await client.patch(userId).dec({ accountDeposit: totalCost }).commit();
 
     return {
       success: true,

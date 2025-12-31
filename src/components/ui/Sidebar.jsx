@@ -387,7 +387,7 @@ const Sidebar = ({ isCollapsed, setCollapsed, isNavOpen, setOpenNav }) => {
 
         <LogOutModal
           isLoggedOut={isLoggedOut}
-          onCancel={(e) => setIsLoggedOut(false)}
+          onCancel={() => setIsLoggedOut(false)}
         />
       </motion.aside>
     </>

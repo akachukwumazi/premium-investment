@@ -101,10 +101,10 @@ export const GET = asyncHandler(async (req) => {
 
   const { page, limit, start, end } = getPaginationParams(req);
 
-  const totalCount = await client.fetch(`count(*[_type == "Deposit"])`);
+  const totalCount = await client.fetch(`count(*[_type == "deposit"])`);
 
   const deposits = await client.fetch(
-    `*[_type == "Deposit"] | order(_createdAt desc) [${start}...${end}] {
+    `*[_type == "deposit"] | order(_createdAt desc) [${start}...${end}] {
         _id,
       amount,
       status,

@@ -2,8 +2,26 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useApi } from "@/hooks/useApi";
+import { toast } from "react-toastify";
 
 const LogOutModal = ({ isLoggedOut, onCancel }) => {
+  const { apiRequest, loading } = useApi();
+
+const handleLogout = async () => {
+    try {
+      const res = await apiRequest("/api/auth/logout", "POST");
+      if (!res.success) {
+        toast.error(res.message || "Failed to logout");
+        return;
+      } 
+      window.location.href = "/auth/login";
+      toast.success(res.message || "Logged out successfully");
+    } catch (error) {
+      console.error("An error occurred during logout:", error);
+    }
+  };
+
   if (!isLoggedOut) return null;
 
   return (
@@ -38,8 +56,10 @@ const LogOutModal = ({ isLoggedOut, onCancel }) => {
             Cancel
           </button>
 
-          <button className="flex-1 py-4 text-xl font-mono rounded-lg bg-red-500 text-white">
-            Logout
+          <button className="flex-1 py-4 text-xl font-mono rounded-lg bg-red-500 text-white"
+            onClick={handleLogout}
+          >
+            {loading ? "Logging out..." : "Logout"}
           </button>
         </div>
       </motion.div>

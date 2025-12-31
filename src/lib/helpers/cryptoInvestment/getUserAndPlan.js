@@ -2,7 +2,7 @@ import { client } from "@/lib/sanity";
 
 export async function getUserAndPlan(userId, planId) {
   const [user, plan] = await Promise.all([
-    client.fetch(`*[_type=="user" && _id==$userId][0]{_id, accountBalance}`, {
+    client.fetch(`*[_type=="user" && _id==$userId][0]{_id, accountDeposit}`, {
       userId,
     }),
     client.fetch(

@@ -126,11 +126,7 @@ const Topbar = ({ onToggle, onNavClick }) => {
       </div>
 
       <div className="flex items-center gap-5">
-        <div className="cursor-pointer border border-gray-400 font-bold text-gray-500 rounded-full p-3 hover:bg-gray-100 active:scale-95 transition-all duration-300">
-          {/* <Icon
-            icon="mdi:account"
-            className="text-gray-600 w-5 h-5 md:w-8 md:h-8"
-          /> */}
+        <div className="cursor-pointer border border-gray-400 font-bold text-gray-500 rounded-full w-13 h-13 flex items-center justify-center hover:bg-gray-100 active:scale-95 transition-all duration-300">
           {profile}
         </div>
         <h3 className="hidden md:block font-semibold text-gray-800 text-xl">

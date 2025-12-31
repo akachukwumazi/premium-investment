@@ -23,7 +23,7 @@ export default function SettingsLayout({ children }) {
         className="w-full p-6"
       >
         <KycVerifyNotice />
-        <div className="relative flex border-b-2 border-gray-300 justify-between pb-2 w-full  max-w-100">
+        <div className="relative flex border-b-2 border-gray-300 justify-between pb-2 w-full  max-w-150">
           {tabs.map((tab) => {
             const isActive = pathname.includes(tab.id);
 

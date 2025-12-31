@@ -3,7 +3,7 @@ import { client } from "@/lib/sanity";
 export async function getUserAndStockBondPlan(userId, planId) {
   const [user, plan] = await Promise.all([
     client.fetch(
-      `*[_type=="user" && _id==$userId][0]{_id, accountBalance, name, email}`,
+      `*[_type=="user" && _id==$userId][0]{_id, accountDeposit, name, email}`,
       { userId }
     ),
     client.fetch(

@@ -1,38 +1,60 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import KycVerifyNotice from "@/components/ui/KycVerifyNotice";
-
-const notifications = [
-  {
-    title: "New Plan Available",
-    message:
-      "This product is under active development and is available in a Private Beta, please contact Courier support for access.",
-    type: "new",
-    icon: "mdi:lightbulb-on-outline",
-  },
-  {
-    title: "Investment Activated",
-    message: "Your Premium Plan is now active.",
-    type: "active",
-    icon: "mdi:chart-line",
-  },
-  {
-    title: "Profit Earned",
-    message: "You earned $50 USDT from your active investment plan.",
-    type: "profit",
-    icon: "mdi:cash",
-  },
-  {
-    title: "Plan Ending Soon",
-    message: "Your Standard Plan will mature in 2 days.",
-    type: "ending",
-    icon: "mdi:alert-circle-outline",
-  },
-];
+import { useApi } from "@/hooks/useApi";
+import { toast } from "react-toastify";
 
 const Page = () => {
+  const { apiRequest, loading } = useApi();
+  const [activities, setActivities] = useState([]);
+
+  const fetchActivities = async () => {
+    try {
+      const res = await apiRequest("/api/users/me/activities", "GET");
+
+      if (!res.success) {
+        toast.error(res.message || "Failed to fetch activities");
+        return;
+      }
+
+      setActivities(res.data || []);  
+    } catch (error) {
+      toast.error("An error occurred while fetching activities");
+    }
+  };
+
+  useEffect(() => {
+    fetchActivities();
+  }, []);
+
+ 
+  const formatDate = (isoDate) => {
+    if (!isoDate) return "-";
+    return new Date(isoDate).toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  };
+
+
+  const getIcon = (action) => {
+    if (!action) return "mdi:information-outline";
+
+    const lower = action.toLowerCase();
+    if (lower.includes("bonus")) return "mdi:gift-outline";
+    if (lower.includes("deposit")) return "mdi:bank-transfer-in";
+    if (lower.includes("withdraw")) return "mdi:bank-transfer-out";
+    if (lower.includes("plan")) return "mdi:chart-line";
+    if (lower.includes("profit")) return "mdi:cash";
+
+    return "mdi:bell-outline";
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,41 +62,32 @@ const Page = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen space-y-4 bg-gray-50 overflow-x-auto"
     >
-      <KycVerifyNotice isVerified={false} />
+      <KycVerifyNotice />
 
-      {notifications.map(({ icon, title, message, type }, i) => {
-        let color = "";
 
-        switch (type) {
-          case "new":
-            color = "border-yellow-400";
-            break;
-          case "active":
-            color = "border-blue-500";
-            break;
-          case "profit":
-            color = "border-green-500";
-            break;
-          case "ending":
-            color = "border-red-500";
-            break;
-          default:
-            color = "border-gray-300";
-        }
+      {activities.length === 0 && (
+        <div className="text-center text-gray-600 py-10">
+          No activities yet.
+        </div>
+      )}
 
-        return (
-          <div
-            key={i}
-            className={`border-l-4 ${color} bg-white p-4 rounded-md shadow-sm `}
-          >
-            <div className="flex items-center gap-2">
-              <Icon icon={icon} className="text-xl" />
-              <h3 className="font-bold text-gray-900">{title}</h3>
-            </div>
-            <p className="text-gray-600 text-sm mt-1">{message}</p>
+
+      {activities.map((item) => (
+        <div
+          key={item._id}
+          className="border-l-4 border-blue-500 bg-white p-4 rounded-md shadow-sm"
+        >
+          <div className="flex items-center gap-2">
+            <Icon icon={getIcon(item.action)} className="text-xl text-blue-600" />
+            <h3 className="font-bold text-gray-900">{item.action}</h3>
           </div>
-        );
-      })}
+
+          <p className="text-gray-600 text-sm mt-1">{item.details}</p>
+          <p className="text-gray-400 text-xs mt-2">
+            {formatDate(item.timestamp)}
+          </p>
+        </div>
+      ))}
     </motion.div>
   );
 };

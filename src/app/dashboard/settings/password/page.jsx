@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useApi } from "@/hooks/useApi";
+import { toast } from "react-toastify";
 
 export default function Page() {
+  const { apiRequest, loading } = useApi();
+
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -12,14 +16,43 @@ export default function Page() {
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ oldPassword, newPassword, confirmPassword });
+
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      return toast.error("All fields are required");
+    }
+
+    if (newPassword !== confirmPassword) {
+      return toast.error("New passwords do not match");
+    }
+
+    try {
+      const res = await apiRequest("/api/users/me/password", "POST", {
+        currentPassword: oldPassword,
+        newPassword: newPassword,
+      });
+
+      if (!res.success) {
+        toast.error(res.message || "Something went wrong");
+        return;
+      }
+
+      toast.success("Password updated successfully");
+
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message || "Failed to update password");
+    }
   };
 
   return (
-    <div className="w-full  max-w-xl  rounded-md border-gray-300 border p-4">
+    <div className="w-full max-w-xl rounded-md border-gray-300 border p-4">
       <form onSubmit={handleSubmit} className="space-y-6 w-full">
+
 
         <div className="space-y-1">
           <label className="text-sm font-medium">Old password</label>
@@ -61,6 +94,7 @@ export default function Page() {
           </div>
         </div>
 
+
         <div className="space-y-1">
           <label className="text-sm font-medium">Confirm new password</label>
           <div className="relative">
@@ -83,9 +117,10 @@ export default function Page() {
 
         <button
           type="submit"
-          className="w-full bg-premium-blue hover:bg-premium-blue/80 text-white py-3 rounded-xl text-sm font-medium transition"
+          disabled={loading}
+          className="w-full bg-premium-blue hover:bg-premium-blue/80 text-white py-3 active:scale-95 rounded-xl text-sm font-medium transition disabled:opacity-70"
         >
-          Change password
+          {loading ? "Updating..." : "Change password"}
         </button>
       </form>
     </div>

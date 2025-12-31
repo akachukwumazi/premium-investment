@@ -5,7 +5,7 @@ import { sendDepositNotificationEmail } from "@/lib/mailer";
 export async function createDeposit({ userId, userData, crypto, amount, proofImageRef }) {
   const newFund = {
     _id: uuidv4(),
-    _type: "Deposit",
+    _type: "deposit",
     user: { _type: "reference", _ref: userId },
     crypto,
     amount,

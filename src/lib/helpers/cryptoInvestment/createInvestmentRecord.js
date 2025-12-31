@@ -36,7 +36,7 @@ export async function createInvestmentRecord(
     const transaction = client
       .transaction()
       .create(newInvestment)
-      .patch(userId, (patch) => patch.dec({ accountBalance: amount }));
+      .patch(userId, (patch) => patch.dec({ accountDeposit: amount }));
 
     // Commit both actions atomically
     const result = await transaction.commit();

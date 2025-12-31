@@ -7,7 +7,7 @@ export async function validateInvestmentEligibility(
   userId,
   planId
 ) {
-  const balance = Number(user.accountBalance || 0);
+  const balance = Number(user.accountDeposit || 0);
   const min = Number(plan.minDeposit);
   const max = Number(plan.maxDeposit);
   const amt = Number(amount);

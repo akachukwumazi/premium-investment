@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 
-
 export function useApi() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -10,12 +9,17 @@ export function useApi() {
     setLoading(true);
     setError(null);
 
+    const isFormData = body instanceof FormData;
+
     const options = {
       method,
-      headers: { "Content-Type": "application/json", ...headers },
-    };
+      headers: {
 
-    if (body) options.body = JSON.stringify(body);
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        ...headers,
+      },
+      body: isFormData ? body : body ? JSON.stringify(body) : null,
+    };
 
     try {
       const res = await fetch(url, options);

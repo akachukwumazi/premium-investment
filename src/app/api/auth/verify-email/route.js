@@ -43,7 +43,7 @@
  *                     email:
  *                       type: string
  *                       example: johndoe@example.com
- *                     accountBalance:
+ *                     accountDeposit:
  *                       type: number
  *                       example: 10
  *       400:
@@ -184,8 +184,8 @@ export const GET = asyncHandler(async (req) => {
       tokenExpiresAt: null,
       _updatedAt: new Date().toISOString(),
     })
-    .setIfMissing({ accountBalance: 0 })
-    .inc({ accountBalance: 10 }) // welcome bonus
+    .setIfMissing({ accountDeposit: 0 })
+    .inc({ accountDeposit: 10 }) // welcome bonus
     .commit();
 
   await logUserActivity(
@@ -198,6 +198,6 @@ export const GET = asyncHandler(async (req) => {
   return sendResponse(true, "Email verified successfully!", 200, {
     userId: updatedUser._id,
     email: updatedUser.email,
-    accountBalance: updatedUser.accountBalance,
+    accountDeposit: updatedUser.accountDeposit,
   });
 });
