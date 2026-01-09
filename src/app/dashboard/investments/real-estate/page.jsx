@@ -44,7 +44,7 @@ const page = () => {
   const [stat, setStats] = useState();
   const handleStatsFetch = async () => {
     try {
-      const res = await apiRequest("/api/users/me/dashboard", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/users/me/dashboard", "GET");
 
       if (!res.success) {
         toast.error(res.message || "Error in fetching your stats");

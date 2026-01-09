@@ -126,7 +126,7 @@ const page = () => {
       setStartingPlan(true);
       const planId = selectedPlan._id;
 
-      const res = await apiRequest(`/api/users/me/investments/crypto`, "POST", {
+      const res = await apiRequest(`https://premium-invest-server-0aff.onrender.com/api/users/me/investments/crypto`, "POST", {
         amount: Number(amount),
         planId,
       });

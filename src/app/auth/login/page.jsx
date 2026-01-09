@@ -47,7 +47,7 @@ const page = () => {
       await validationSchema.validate(formData, { abortEarly: false });
       const { confirmPassword, ...dataToSend } = formData;
 
-      const response = await apiRequest("/api/auth/login", "POST", dataToSend);
+      const response = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/auth/login", "POST", dataToSend);
       toast.success("Sign Up Successful! 🎉");
       location.href = "/dashboard";
     } catch (err) {

@@ -62,7 +62,7 @@ const Page = () => {
     e.preventDefault();
     setSaveLoading(true);
     try {
-      const res = await apiRequest("/api/users/me", "PATCH", {
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/users/me", "PATCH", {
         address: profile.address,
         city: profile.city,
         state: profile.state,

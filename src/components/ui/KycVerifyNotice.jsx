@@ -12,7 +12,7 @@ const KycVerifyNotice = () => {
     useEffect(() => {
         const fetchKycStatus = async () => {
             try {
-                const res = await apiRequest("/api/users/me/kyc/me", "GET");
+                const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/kyc/me", "GET");
                 console.log("response", res.data.status);
 
 

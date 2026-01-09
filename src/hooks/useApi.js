@@ -12,9 +12,9 @@ export function useApi() {
     const isFormData = body instanceof FormData;
 
     const options = {
+      credentials: "include",
       method,
       headers: {
-
         ...(isFormData ? {} : { "Content-Type": "application/json" }),
         ...headers,
       },

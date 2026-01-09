@@ -38,7 +38,7 @@ export default function Page() {
 
   const handleFetchKycData = async () => {
     try {
-      const res = await apiRequest("/api/users/me/kyc/me", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/kyc/me", "GET");
 
       if (!res.success) {
         toast.error(res.message || "Failed to fetch KYC data");
@@ -97,8 +97,8 @@ export default function Page() {
 
       const url =
         status === "rejected"
-          ? "/api/users/me/kyc/resubmit"
-          : "/api/users/me/kyc";
+          ? "https://premium-invest-server-0aff.onrender.com/api/user/me/kyc/resubmit"
+          : "https://premium-invest-server-0aff.onrender.com/api/user/kyc";
 
       const method = status === "rejected" ? "PATCH" : "POST";
 

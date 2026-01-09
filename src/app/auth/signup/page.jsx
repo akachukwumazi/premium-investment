@@ -61,10 +61,11 @@ const page = () => {
 
     const { confirmPassword, ...dataToSend } = formData;
 
-    const response = await apiRequest("/api/auth/signup", "POST", dataToSend);
+    const response = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/auth/signup", "POST", dataToSend);
 
     toast.success("Sign Up Successful! 🎉");
-    location.href="/auth/login"
+    location.href="/auth/verify-email";
+    localStorage.setItem("userEmail", formData.email);
   } catch (err) {
     const newErrors = {};
 

@@ -95,7 +95,7 @@ const page = () => {
     try {
       setStockId(planId);
       const res = await apiRequest(
-        "/api/users/me/investments/stock-bond",
+        "https://premium-invest-server-0aff.onrender.com/api/users/me/investments/stock-bond",
         "POST",
         { planId }
       );

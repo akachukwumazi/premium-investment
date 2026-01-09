@@ -213,7 +213,7 @@ const page = () => {
     setSubmitLoading(true);
 
     try {
-      const res = await apiRequest("/api/funds", "POST", formData);
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/deposits", "POST", formData);
 
       if (!res.success) {
         toast.error(res.message || "Failed to submit deposit");
@@ -237,7 +237,7 @@ const page = () => {
   const handleHistoryFetch = async (page = 1, limit = rowsPerPage) => {
     try {
       const res = await apiRequest(
-        `/api/funds/history?page=${page}&limit=${limit}`,
+        `https://premium-invest-server-0aff.onrender.com/api/deposits/history?page=${page}&limit=${limit}`,
         "GET"
       );
       if (!res.success) {
@@ -281,7 +281,7 @@ const page = () => {
   const handleStatsFetch = async () => {
     setLoading(true);
     try {
-      const res = await apiRequest("/api/users/me/dashboard", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/dashboard-stats", "GET");
       if (!res.success) {
         toast.error(res.message || "Error in fetching your stats");
       }

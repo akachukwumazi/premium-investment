@@ -12,7 +12,7 @@ const Page = () => {
 
   const fetchActivities = async () => {
     try {
-      const res = await apiRequest("/api/users/me/activities", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/users/me/activities", "GET");
 
       if (!res.success) {
         toast.error(res.message || "Failed to fetch activities");

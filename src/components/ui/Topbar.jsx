@@ -55,9 +55,8 @@ const Topbar = ({ onToggle, onNavClick }) => {
 
   const handleMe = async () => {
     try {
-      const res = await apiRequest("/api/users/me", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/me", "GET");
 
-      // console.log(res);
       
 
       const fullName = res?.data?.fullName || "";

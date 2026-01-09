@@ -28,7 +28,7 @@ export default function Page() {
     }
 
     try {
-      const res = await apiRequest("/api/users/me/password", "POST", {
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/users/me/password", "POST", {
         currentPassword: oldPassword,
         newPassword: newPassword,
       });

@@ -24,7 +24,6 @@ function DashboardStats({ name, value, icon, color, lineColor }) {
       transition={{ duration: 0.5 }}
       className="bg-white rounded-md md:rounded-2xl shadow-sm border border-gray-300 p-3 md:p-5 flex flex-col justify-between hover:shadow-md transition-all"
     >
-      {/* Top section */}
       <div className="flex items-center gap-1 md:gap-3">
         <div
           className={`md:w-10 md:h-10 w-8 h-8 rounded-full flex items-center justify-center ${lineColor} bg-opacity-10`}
@@ -36,7 +35,6 @@ function DashboardStats({ name, value, icon, color, lineColor }) {
         </p>
       </div>
 
-      {/* Bottom section */}
       <div className="flex items-end justify-between md:mt-6">
         <h2 className="md:text-2xl text-sm font-bold flex items-center gap-2">${value}</h2>
         <div
@@ -65,7 +63,6 @@ function ActionCards({ title, imageSrc, onClick, icon, href }) {
         />
       </div>
 
-      {/* Bottom Section */}
       <div className="flex justify-between items-center px-2 md:px-5 py-4">
         <div className="flex items-center gap-2">
           <Icon icon={icon} width={28} height={28} />
@@ -92,7 +89,7 @@ export default function Page() {
 
   const handleStatsFetch = async () => {
     try {
-      const res = await apiRequest("/api/users/me/dashboard", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/dashboard-stats", "GET");
 
       if (!res.success) {
         toast.error(res.message || "Error in fetching your stats");

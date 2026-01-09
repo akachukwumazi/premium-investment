@@ -105,7 +105,7 @@ const page = () => {
         amount,
         walletAddress,
       };
-      const res = await apiRequest("/api/withdrawals", "POST", body);
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/withdrawals", "POST", body);
       if (!res.success) {
         toast.error(res.message || "Error in submitting withdrawal request");
         return;
