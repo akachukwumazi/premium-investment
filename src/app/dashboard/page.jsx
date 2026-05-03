@@ -24,22 +24,20 @@ function DashboardStats({ name, value, icon, color, lineColor }) {
       transition={{ duration: 0.5 }}
       className="bg-white rounded-md md:rounded-2xl shadow-sm border border-gray-300 p-3 md:p-5 flex flex-col justify-between hover:shadow-md transition-all"
     >
-      <div className="flex items-center gap-1 md:gap-3">
+      <div className="flex items-center gap-2 md:gap-3">
         <div
           className={`md:w-10 md:h-10 w-8 h-8 rounded-full flex items-center justify-center ${lineColor} bg-opacity-10`}
         >
           <Icon icon={icon} color={color} className="md:h-6 md:w-6" />
         </div>
-        <p className="text-gray-600 text-[11px] md:text-2xl font-medium">
+        <p className="text-gray-600 text-[11px] md:text-sm font-medium">
           {name}
         </p>
       </div>
 
-      <div className="flex items-end justify-between md:mt-6">
-        <h2 className="md:text-2xl text-sm font-bold flex items-center gap-2">${value}</h2>
-        <div
-          className={`w-16 h-[30px] rounded-full flex items-center justify-center  bg-opacity-10`}
-        >
+      <div className="flex items-end justify-between mt-4">
+        <h2 className="md:text-2xl text-sm font-bold">${value}</h2>
+        <div className="w-16 h-[30px] rounded-full flex items-center justify-center bg-opacity-10">
           <MiniLineChart color={color} />
         </div>
       </div>
@@ -47,13 +45,10 @@ function DashboardStats({ name, value, icon, color, lineColor }) {
   );
 }
 
-function ActionCards({ title, imageSrc, onClick, icon, href }) {
+function ActionCards({ title, imageSrc, icon, href }) {
   return (
-    <div
-      className="border h-80 border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 bg-white overflow-hidden w-full  cursor-pointer p-4"
-      onClick={onClick}
-    >
-      <div className="w-full h-57 overflow-hidden rounded-t-2xl">
+    <div className="border h-80 border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all bg-white overflow-hidden p-4">
+      <div className="w-full h-56 overflow-hidden rounded-xl">
         <Image
           src={imageSrc}
           alt={title}
@@ -63,14 +58,14 @@ function ActionCards({ title, imageSrc, onClick, icon, href }) {
         />
       </div>
 
-      <div className="flex justify-between items-center px-2 md:px-5 py-4">
+      <div className="flex justify-between items-center mt-4">
         <div className="flex items-center gap-2">
           <Icon icon={icon} width={28} height={28} />
           <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
         </div>
         <Link
           href={href}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg transition-all duration-300"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-all"
         >
           Get started
         </Link>
@@ -79,22 +74,26 @@ function ActionCards({ title, imageSrc, onClick, icon, href }) {
   );
 }
 
-
 export default function Page() {
-  const [stat, setStats] = useState();
-  const { apiRequest, loading, error } = useApi();
-
-  // const pulse = <div className="w-15 h-3 animate-pulse bg-gray-300 rounded"></div>;
-  const pulse = 0;
+  const { apiRequest, loading } = useApi();
+  const [stat, setStats] = useState(null);
 
   const handleStatsFetch = async () => {
     try {
-      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/dashboard-stats", "GET");
+      const res = await apiRequest(
+        "https://premium-invest-server-0aff.onrender.com/api/user/dashboard-stats",
+        "GET"
+      );
 
       if (!res.success) {
-        toast.error(res.message || "Error in fetching your stats");
+        toast.error(res.message || "Failed to fetch stats");
+        return;
       }
-      setStats(res?.data.data);
+
+      // ✅ FIXED
+      setStats(res.data);
+      console.log("Dashboard stats:", res);
+
     } catch (err) {
       toast.error(err.message || "Network error");
     }
@@ -107,28 +106,28 @@ export default function Page() {
   const stats = [
     {
       name: "Account Deposit",
-      value: loading ? pulse : stat?.balance || 0,
+      value: loading ? "..." : stat?.balance ?? 0,
       icon: "mdi:receipt-text-outline",
       color: "#2563eb",
       lineColor: "bg-blue-200",
     },
     {
       name: "Total Investment",
-      value:  loading ? pulse : stat?.totalInvestmentAmount || 0 ,
+      value: loading ? "..." : stat?.totalInvestmentAmount ?? 0,
       icon: "mdi:chart-line",
       color: "#f97316",
       lineColor: "bg-orange-200",
     },
     {
       name: "Total Profit",
-      value: loading ? pulse : stat?.totalProfitAmount || 0,
+      value: loading ? "..." : stat?.totalProfitAmount ?? 0,
       icon: "mdi:cash-multiple",
       color: "#16a34a",
       lineColor: "bg-green-200",
     },
     {
       name: "Total Withdrawal",
-      value: loading ? pulse : stat?.totalWithdrawalAmount || 0,
+      value: loading ? "..." : stat?.totalWithdrawalAmount ?? 0,
       icon: "mdi:bank-transfer-out",
       color: "#9333ea",
       lineColor: "bg-purple-200",
@@ -142,46 +141,38 @@ export default function Page() {
       transition={{ duration: 0.5 }}
       className="min-h-screen flex flex-col gap-6"
     >
-      <h1 className="md:text-3xl text-md font-bold mb-6">Dashboard</h1>
-      <KycVerifyNotice isVerified={false} />
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
-        {stats.map((stat, i) => (
-          <DashboardStats key={i} {...stat} />
+      <h1 className="md:text-3xl text-md font-bold">Dashboard</h1>
+
+      <KycVerifyNotice />
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+        {stats.map((item, i) => (
+          <DashboardStats key={i} {...item} />
         ))}
       </div>
-      <div className="grid md:grid-cols-3 gap-3">
+
+      <div className="grid md:grid-cols-3 gap-4">
         <ActionCards
           title="Crypto"
           imageSrc={cryptoInvest}
-          href={"/dashboard/investments/crypto"}
-          onClick={() => console.log("Make Deposit clicked")}
-          icon={"streamline-freehand-color:crypto-currency-bitcoin-chip"}
+          href="/dashboard/investments/crypto"
+          icon="streamline-freehand-color:crypto-currency-bitcoin-chip"
         />
         <ActionCards
           title="Loans"
           imageSrc={loanInvest}
-          href={"/dashboard/investments/loan"}
-          onClick={() => console.log("Make Deposit clicked")}
-          icon={"carbon:global-loan-and-trial"}
+          href="/dashboard/investments/loan"
+          icon="carbon:global-loan-and-trial"
         />
         <ActionCards
           title="Real Estate"
           imageSrc={stockInvest}
-          href={"/dashboard/investments/real-estate"}
-          onClick={() => console.log("Make Deposit clicked")}
-          icon={"material-symbols:real-estate-agent-outline-rounded"}
-        />
-        <ActionCards
-          title="Stocks & Bonds"
-          imageSrc={realEstate}
-          href={"/dashboard/investments/stocks"}
-          onClick={() => console.log("Make Deposit clicked")}
-          icon={"arcticons:stockswidget"}
+          href="/dashboard/investments/real-estate"
+          icon="material-symbols:real-estate-agent-outline-rounded"
         />
       </div>
-      <div>
-        <DashboardServices />
-      </div>
+
+      <DashboardServices />
     </motion.div>
   );
 }

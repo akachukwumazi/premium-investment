@@ -67,7 +67,7 @@ const Footer = () => {
                 Contact
               </Link>
               <Link
-                href="/About-us"
+                href="/about-us"
                 className="hover:text-premium-blue transition"
               >
                 About Us
@@ -154,7 +154,7 @@ const Footer = () => {
                 Privacy Policy
               </Link>
               <Link
-                href="/terms"
+                href="/terms-and-conditions"
                 className="hover:text-premium-blue transition"
               >
                 Terms & Conditions
@@ -186,7 +186,7 @@ const Footer = () => {
             <Link href="/privacy-policy"
             className="hover:text-premium-blue transition font-bold md:border-r-2 pr-2"
             >Privacy Policy</Link>
-            <Link href="/terms"
+            <Link href="/terms-and-conditions"
             className="hover:text-premium-blue transition font-bold md:border-r-2 pr-2"
             >Terms & Conditions</Link>
             <Link href="/cookies"

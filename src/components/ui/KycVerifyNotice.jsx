@@ -23,7 +23,6 @@ const KycVerifyNotice = () => {
                 else {
                     setIsVerified(true);
                     setStatus(res.data.status || "verified");
-                    console.log(res);
                     
                     console.log("KYC is verified");
                 }

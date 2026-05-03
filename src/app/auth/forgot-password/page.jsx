@@ -25,7 +25,7 @@ const page = () => {
 
     try {
       const response = await apiRequest(
-        `/api/auth/request-otp`,
+        `https://premium-invest-server-0aff.onrender.com/api/auth/request-otp`,
         "POST",
         { email } // MUST BE AN OBJECT
       );

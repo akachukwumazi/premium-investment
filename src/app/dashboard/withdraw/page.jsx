@@ -91,7 +91,6 @@ const page = () => {
   const [withdrawalLoading, setWithdrawalLoading] = useState(false);
   const [resetForm, setResetForm] = useState(false);
 
-  // const { crypto, amount, walletAddress } = body;
 
   const handleWithdrawal = async () => {
     if (!crypto || !amount || !walletAddress) {
@@ -137,7 +136,7 @@ const page = () => {
   const handleStatsFetch = async () => {
     setLoading(true);
     try {
-      const res = await apiRequest("/api/users/me/dashboard", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/dashboard-stats", "GET");
       if (!res.success) {
         toast.error(res.message || "Error in fetching your stats");
       }
@@ -156,7 +155,7 @@ const page = () => {
   const handleFetchHistory = async (page = 1, limit = rowsPerPage) => {
     try {
       const res = await apiRequest(
-        `/api/withdrawals/history?page=${page}&limit=${limit}`,
+        `https://premium-invest-server-0aff.onrender.com/api/withdrawals/history?page=${page}&limit=${limit}`,
         "GET"
       );
 
@@ -221,14 +220,14 @@ const page = () => {
             <div className="flex gap-2 w-full">
               <DashboardStats
                 name="Account Deposit"
-                value={loading ? pulse : stat?.balance || 0}
+                value={loading ? "..." : stat?.balance || 0}
                 icon="mdi:receipt-text-outline"
                 color="#2563eb"
                 lineColor="bg-blue-200"
               />
               <DashboardStats
                 name="Total Investment"
-                value={loading ? pulse : stat?.totalInvestmentAmount || 0}
+                value={loading ? "..." : stat?.totalInvestmentAmount || 0}
                 icon="mdi:chart-line"
                 color="#f97316"
                 lineColor="bg-orange-200"

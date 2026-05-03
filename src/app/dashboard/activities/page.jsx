@@ -12,14 +12,20 @@ const Page = () => {
 
   const fetchActivities = async () => {
     try {
-      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/users/me/activities", "GET");
+      const res = await apiRequest(
+        "https://premium-invest-server-0aff.onrender.com/api/user/activities",
+        "GET"
+      );
 
       if (!res.success) {
         toast.error(res.message || "Failed to fetch activities");
         return;
       }
 
-      setActivities(res.data || []);  
+      // ✅ Corrected: fetch activities from res.data.activities
+      setActivities(res.data?.activities || []);  
+      console.log(res);
+
     } catch (error) {
       toast.error("An error occurred while fetching activities");
     }
@@ -29,7 +35,6 @@ const Page = () => {
     fetchActivities();
   }, []);
 
- 
   const formatDate = (isoDate) => {
     if (!isoDate) return "-";
     return new Date(isoDate).toLocaleString("en-US", {
@@ -40,7 +45,6 @@ const Page = () => {
       minute: "2-digit"
     });
   };
-
 
   const getIcon = (action) => {
     if (!action) return "mdi:information-outline";
@@ -64,13 +68,11 @@ const Page = () => {
     >
       <KycVerifyNotice />
 
-
       {activities.length === 0 && (
         <div className="text-center text-gray-600 py-10">
           No activities yet.
         </div>
       )}
-
 
       {activities.map((item) => (
         <div

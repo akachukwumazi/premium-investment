@@ -67,7 +67,7 @@ const page = () => {
 
   const handleStatsFetch = async () => {
     try {
-      const res = await apiRequest("/api/users/me/dashboard", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/user/dashboard-stats", "GET");
       if (!res.success)
         toast.error(res.message || "Error in fetching your stats");
       setStats(res?.data.data);
@@ -82,7 +82,7 @@ const page = () => {
 
   const handleFetchPlans = async () => {
     try {
-      const res = await apiRequest("/api/investments/crypto/plans", "GET");
+      const res = await apiRequest("https://premium-invest-server-0aff.onrender.com/api/investments/crypto/plans", "GET");
       if (!res.success) {
         toast.error(res.message || "Unable to load plans");
         return;
@@ -126,7 +126,7 @@ const page = () => {
       setStartingPlan(true);
       const planId = selectedPlan._id;
 
-      const res = await apiRequest(`https://premium-invest-server-0aff.onrender.com/api/users/me/investments/crypto`, "POST", {
+      const res = await apiRequest(`https://premium-invest-server-0aff.onrender.com/api/users/investments/crypto`, "POST", {
         amount: Number(amount),
         planId,
       });

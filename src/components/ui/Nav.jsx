@@ -36,9 +36,8 @@ const Nav = () => {
         { name: "Investment Tips", href: "/" },
         { name: "Economic Analysis", href: "/" },
       ],
-    },
-    { name: "Contact", href: "/Contact" },
-    { name: "About us", href: "/About-us" },
+    },    { name: "Contact", href: "/contact" },
+    { name: "About us", href: "/about-us" },
   ];
 
   // const handleDropdownDisplay = (tab) => {
@@ -146,8 +145,9 @@ const Nav = () => {
 
         {/* Right side (desktop only) */}
         <div className="hidden lg:flex gap-10 items-center">
-          <Link href={"/auth/login"} className="font-semibold text-lg">Login</Link>
-          <SubmitButton name="Get Started" className="rounded-full" />
+          <Link href={"/dashboard"} className="font-semibold text-lg">Login</Link>
+          {/* <SubmitButton name="Get Started" className="rounded-full" />y */}
+          <Link href={"/dashboard"} className="bg-[#CEA744] text-white py-2 px-4 hover:bg-[#B58A2D] transition-all duration-300 rounded-full active:scale-98 shadow-gray-300 shadow-md text-xl font-bold w-full  disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">Get Started</Link>          
         </div>
 
         <svg
